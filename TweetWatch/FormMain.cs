@@ -91,7 +91,9 @@ namespace TweetWatch
         {
             buttonStart.Enabled = false;
             comboBoxSite.Enabled = false;
-            url = baseUrl + "/" + (string)comboBoxSite.SelectedItem;
+            string site = (string)comboBoxSite.SelectedItem;
+            url = baseUrl + "/" + site;
+            Text += " - " + site;
             Task.Run(async () =>
             {
                 await InitializeCurrentTweets();

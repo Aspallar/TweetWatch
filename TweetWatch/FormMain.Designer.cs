@@ -112,7 +112,7 @@
             this.Controls.Add(this.textBoxTweet);
             this.Controls.Add(this.linkLabelTweetUrl);
             this.Controls.Add(this.comboBoxSite);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
