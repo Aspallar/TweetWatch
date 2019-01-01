@@ -62,10 +62,28 @@ namespace TweetWatch
             string fileName = AppDomain.CurrentDomain.BaseDirectory + "tweetsites.txt";
             if (File.Exists(fileName))
             {
-                var sites = File.ReadAllLines(fileName).Select(x => x.Trim()).Where(x => x.Length > 0);
-                foreach (string site in sites)
-                    comboBoxSite.Items.Add(site);
-                comboBoxSite.SelectedIndex = 0;
+                var sites = File.ReadAllLines(fileName).Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+                comboBoxSite.Items.AddRange(sites);
+                if (sites.Length > 0)
+                {
+                    comboBoxSite.SelectedIndex = 0;
+                    SetSiteLink();
+                }
+            }
+        }
+
+        private void SetSiteLink()
+        {
+            string site = (string)comboBoxSite.SelectedItem;
+            if (site != null)
+            {
+                linkLabelSite.Visible = true;
+                linkLabelSite.Text = "Go to " + site + " twitter";
+                linkLabelSite.Tag = site;
+            }
+            else
+            {
+                linkLabelSite.Visible = false;
             }
         }
 
@@ -155,13 +173,12 @@ namespace TweetWatch
                 if (status == TwitStatus.Failed)
                 {
                     color = Color.Red;
-                    message = "Failed to access twitter site.";
+                    message = "Unable to access twitter site";
                 }
                 else
                 {
                     color = Color.Green;
-                    message = "Monitoring twitter.";
-
+                    message = "Monitoring twitter";
                 }
                 labelStatus.ForeColor = color;
                 tooltip.SetToolTip(labelStatus, message);
@@ -191,6 +208,16 @@ namespace TweetWatch
         private void linkLabelTweetUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(baseUrl + linkLabelTweetUrl.Text);
+        }
+
+        private void comboBoxSite_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetSiteLink();
+        }
+
+        private void linkLabelSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(baseUrl + "\\" + (string)linkLabelSite.Tag);
         }
     }
 }
