@@ -39,6 +39,17 @@ namespace TweetWatch
             tooltip.SetToolTip(labelStatus, "Not Started");
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCHITTEST = 0x84;
+            if (m.Msg == WM_NCHITTEST)
+            {
+                m.Result = (IntPtr)2;
+                return;
+            }
+            base.WndProc(ref m);
+        }
+
         private void InitializeSound()
         {
             string fileName = AppDomain.CurrentDomain.BaseDirectory + "twitalert.wav";
@@ -89,6 +100,7 @@ namespace TweetWatch
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
+            buttonMinimize.Enabled = true;
             buttonStart.Enabled = false;
             comboBoxSite.Enabled = false;
             string site = (string)comboBoxSite.SelectedItem;
@@ -220,6 +232,16 @@ namespace TweetWatch
         private void linkLabelSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(baseUrl + "\\" + (string)linkLabelSite.Tag);
+        }
+
+        private void buttonMinimize_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
