@@ -65,6 +65,7 @@
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Tweet.cs" />
     <Compile Include="TwitStatus.cs" />
+    <Compile Include="TwitterPoll.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

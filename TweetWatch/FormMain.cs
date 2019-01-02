@@ -1,15 +1,9 @@
-﻿using AngleSharp.Dom.Html;
-using AngleSharp.Parser.Html;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TweetWatch
@@ -18,14 +12,9 @@ namespace TweetWatch
     {
         private const string baseUrl = "https://twitter.com";
 
-        private SynchronizationContext uiContext;
-        private HtmlParser parser;
-        private HttpClient client;
-        private string url;
-        private HashSet<string> currentTweets;
-        private SoundPlayer newTweetSound;
-        private TwitStatus status = TwitStatus.Stopped;
-        private ToolTip tooltip;
+        private SoundPlayer _newTweetSound;
+        private ToolTip _tooltip;
+        private TwitterPoll _poll;
 
         public FormMain()
         {
@@ -33,16 +22,13 @@ namespace TweetWatch
             InitializeSound();
             IntializeTooltip();
             SetColor();
-            uiContext = SynchronizationContext.Current;
-            parser = new HtmlParser();
-            client = new HttpClient();
         }
 
         private void IntializeTooltip()
         {
-            tooltip = new ToolTip();
-            tooltip.IsBalloon = true;
-            tooltip.SetToolTip(labelStatus, "Not Started");
+            _tooltip = new ToolTip();
+            _tooltip.IsBalloon = true;
+            _tooltip.SetToolTip(labelStatus, "Not Started");
         }
 
         private void SetColor()
@@ -71,7 +57,7 @@ namespace TweetWatch
             string fileName = AppDomain.CurrentDomain.BaseDirectory 
                 + Properties.Settings.Default.Sound;
             if (File.Exists(fileName))
-                newTweetSound = new SoundPlayer(fileName);
+                _newTweetSound = new SoundPlayer(fileName);
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -121,117 +107,42 @@ namespace TweetWatch
             buttonStart.Enabled = false;
             comboBoxSite.Enabled = false;
             string site = (string)comboBoxSite.SelectedItem;
-            url = baseUrl + "/" + site;
+            string url = baseUrl + "/" + site;
             Text += " - " + site;
-            Task.Run(async () =>
-            {
-                await InitializeCurrentTweets();
-                while (true)
-                {
-                    await Task.Delay(Properties.Settings.Default.Period);
-                    await Poll();
-                }
-            });
+            _poll = new TwitterPoll(url, new Progress<Tweet>(NewTweet), new Progress<TwitStatus>(StatusChanged));
+            _poll.Start();
         }
 
-
-        private async Task Poll()
+        private void StatusChanged(TwitStatus status)
         {
-            IHtmlDocument doc = await GetTwitter();
-            if (doc != null)
+            Color color;
+            string message;
+            if (status == TwitStatus.Failed)
             {
-                var tweets = doc.QuerySelectorAll("div.tweet");
-                foreach (var tweet in tweets)
-                {
-                    string id = tweet.GetAttribute("data-tweet-id");
-                    if (!currentTweets.Contains(id))
-                    {
-                        Tweet newTweet = new Tweet
-                        {
-                            Link = tweet.GetAttribute("data-permalink-path"),
-                            Text = tweet.QuerySelector("p.tweet-text")?.TextContent ?? ""
-                        };
-                        currentTweets.Add(id);
-                        ReportTweet(newTweet);
-                        break; // foreach tweet
-                    }
-                }
+                color = Color.Red;
+                message = "Unable to access twitter site";
             }
-        }
-
-        private async Task InitializeCurrentTweets()
-        {
-            IHtmlDocument doc = await GetTwitter();
-            if (doc != null)
+            else
             {
-                currentTweets = new HashSet<string>(doc.QuerySelectorAll("div.tweet")
-                    .Select(x => x.GetAttribute("data-tweet-id")));
+                color = Color.Green;
+                message = "Monitoring twitter";
             }
+            labelStatus.ForeColor = color;
+            _tooltip.SetToolTip(labelStatus, message);
         }
 
-        private async Task<IHtmlDocument> GetTwitter()
+        private void NewTweet(Tweet tweet)
         {
-            try
-            {
-                var page = await client.GetStringAsync(url);
-                UpdateStatus(TwitStatus.Working);
-                var doc = parser.Parse(page);
-                return doc;
-            }
-            catch (HttpRequestException)
-            {
-                UpdateStatus(TwitStatus.Failed);
-                return null;
-            }
-        }
-
-        private void UpdateStatus(TwitStatus newStatus)
-        {
-            if (status != newStatus)
-            {
-                status = newStatus;
-                SetStatusInticator(newStatus);
-            }
-        }
-
-        private void SetStatusInticator(TwitStatus newStatus)
-        {
-            uiContext.Post((o) =>
-            {
-                Color color;
-                string message;
-                TwitStatus status = (TwitStatus)o;
-                if (status == TwitStatus.Failed)
-                {
-                    color = Color.Red;
-                    message = "Unable to access twitter site";
-                }
-                else
-                {
-                    color = Color.Green;
-                    message = "Monitoring twitter";
-                }
-                labelStatus.ForeColor = color;
-                tooltip.SetToolTip(labelStatus, message);
-            }, status);
-        }
-
-        public void ReportTweet(Tweet value)
-        {
-            uiContext.Post((o) =>
-            {
-                Tweet tweet = (Tweet)o;
-                linkLabelTweetUrl.Text = tweet.Link;
-                linkLabelTweetUrl.Visible = true;
-                textBoxTweet.Text = tweet.Text;
-                PlayNewTweetSound();
-            }, value);
+            linkLabelTweetUrl.Text = tweet.Link;
+            linkLabelTweetUrl.Visible = true;
+            textBoxTweet.Text = tweet.Text;
+            PlayNewTweetSound();
         }
 
         private void PlayNewTweetSound()
         {
-            if (newTweetSound != null)
-                newTweetSound.Play();
+            if (_newTweetSound != null)
+                _newTweetSound.Play();
             else
                 SystemSounds.Beep.Play();
         }
