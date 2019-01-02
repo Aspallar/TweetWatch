@@ -196,6 +196,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(284, 245);
             this.Name = "FormMain";
             this.Text = "TweetWatch";
             this.panelTop.ResumeLayout(false);

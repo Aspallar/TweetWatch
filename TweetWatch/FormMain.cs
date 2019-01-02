@@ -40,14 +40,21 @@ namespace TweetWatch
             buttonMinimize.ForeColor = color;
         }
 
+        private readonly IntPtr HTCAPTION = new IntPtr(0x2);
+
         protected override void WndProc(ref Message m)
         {
             const int WM_NCHITTEST = 0x84;
-            const int HTCAPTION = 2;
+            const int WM_SYSCOMMAND = 0x112;
+            const int SC_MAXIMIZE = 0xF030;
             if (m.Msg == WM_NCHITTEST)
             {
-                m.Result = (IntPtr)HTCAPTION;
+                m.Result = HTCAPTION;
                 return;
+            }
+            else if (m.Msg == WM_SYSCOMMAND && (m.WParam.ToInt32() & 0xFFF0) == SC_MAXIMIZE)
+            {
+                return; // don't allow maximize (via caption double click)
             }
             base.WndProc(ref m);
         }
@@ -90,7 +97,7 @@ namespace TweetWatch
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
-        {
+        { 
             buttonStart.Enabled = false;
             comboBoxSite.Enabled = false;
             string site = (string)comboBoxSite.SelectedItem;
