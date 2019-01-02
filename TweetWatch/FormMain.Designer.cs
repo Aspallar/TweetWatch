@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Panel panelBottom;
             System.Windows.Forms.Label labelTitle;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            this.panelBottom = new System.Windows.Forms.Panel();
             this.comboBoxSite = new System.Windows.Forms.ComboBox();
             this.linkLabelTweetUrl = new System.Windows.Forms.LinkLabel();
             this.textBoxTweet = new System.Windows.Forms.TextBox();
@@ -40,10 +40,28 @@
             this.panelTop = new System.Windows.Forms.Panel();
             this.buttonMinimize = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
-            panelBottom = new System.Windows.Forms.Panel();
             labelTitle = new System.Windows.Forms.Label();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // panelBottom
+            // 
+            this.panelBottom.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelBottom.Location = new System.Drawing.Point(0, 241);
+            this.panelBottom.Name = "panelBottom";
+            this.panelBottom.Size = new System.Drawing.Size(284, 4);
+            this.panelBottom.TabIndex = 6;
+            // 
+            // labelTitle
+            // 
+            labelTitle.AutoSize = true;
+            labelTitle.Enabled = false;
+            labelTitle.Location = new System.Drawing.Point(4, 4);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new System.Drawing.Size(69, 13);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "TweetWatch";
             // 
             // comboBoxSite
             // 
@@ -113,15 +131,6 @@
             this.linkLabelSite.Text = "linkLabelSite";
             this.linkLabelSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSite_LinkClicked);
             // 
-            // panelBottom
-            // 
-            panelBottom.BackColor = System.Drawing.Color.DodgerBlue;
-            panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panelBottom.Location = new System.Drawing.Point(0, 241);
-            panelBottom.Name = "panelBottom";
-            panelBottom.Size = new System.Drawing.Size(284, 4);
-            panelBottom.TabIndex = 6;
-            // 
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.DodgerBlue;
@@ -133,16 +142,6 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(243, 20);
             this.panelTop.TabIndex = 7;
-            // 
-            // labelTitle
-            // 
-            labelTitle.AutoSize = true;
-            labelTitle.Enabled = false;
-            labelTitle.Location = new System.Drawing.Point(4, 4);
-            labelTitle.Name = "labelTitle";
-            labelTitle.Size = new System.Drawing.Size(69, 13);
-            labelTitle.TabIndex = 0;
-            labelTitle.Text = "TweetWatch";
             // 
             // buttonMinimize
             // 
@@ -184,7 +183,7 @@
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonMinimize);
             this.Controls.Add(this.panelTop);
-            this.Controls.Add(panelBottom);
+            this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.linkLabelSite);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.buttonStart);
@@ -216,6 +215,7 @@
         private System.Windows.Forms.Panel panelTop;
         private System.Windows.Forms.Button buttonMinimize;
         private System.Windows.Forms.Button buttonClose;
+        private System.Windows.Forms.Panel panelBottom;
     }
 }
 

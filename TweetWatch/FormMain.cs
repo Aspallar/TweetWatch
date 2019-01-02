@@ -31,12 +31,27 @@ namespace TweetWatch
         {
             InitializeComponent();
             InitializeSound();
+            IntializeTooltip();
+            SetColor();
             uiContext = SynchronizationContext.Current;
             parser = new HtmlParser();
             client = new HttpClient();
+        }
+
+        private void IntializeTooltip()
+        {
             tooltip = new ToolTip();
             tooltip.IsBalloon = true;
             tooltip.SetToolTip(labelStatus, "Not Started");
+        }
+
+        private void SetColor()
+        {
+            Color color = Properties.Settings.Default.Color;
+            panelTop.BackColor = color;
+            panelBottom.BackColor = color;
+            buttonClose.ForeColor = color;
+            buttonMinimize.ForeColor = color;
         }
 
         protected override void WndProc(ref Message m)
@@ -52,7 +67,8 @@ namespace TweetWatch
 
         private void InitializeSound()
         {
-            string fileName = AppDomain.CurrentDomain.BaseDirectory + "twitalert.wav";
+            string fileName = AppDomain.CurrentDomain.BaseDirectory 
+                + Properties.Settings.Default.Sound;
             if (File.Exists(fileName))
                 newTweetSound = new SoundPlayer(fileName);
         }
@@ -236,6 +252,7 @@ namespace TweetWatch
 
         private void buttonMinimize_Click(object sender, EventArgs e)
         {
+            textBoxTweet.Focus();
             WindowState = FormWindowState.Minimized;
         }
 

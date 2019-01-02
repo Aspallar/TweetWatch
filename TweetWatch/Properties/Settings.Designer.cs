@@ -22,5 +22,23 @@ namespace TweetWatch.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DodgerBlue")]
+        public string ColorString {
+            get {
+                return ((string)(this["ColorString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Twitalert.wav")]
+        public string Sound {
+            get {
+                return ((string)(this["Sound"]));
+            }
+        }
     }
 }
