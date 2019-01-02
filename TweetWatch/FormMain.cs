@@ -12,7 +12,7 @@ namespace TweetWatch
     {
         private const string baseUrl = "https://twitter.com";
 
-        private SoundPlayer _newTweetSound;
+        private AlertSound _newTweetSound;
         private ToolTip _tooltip;
         private TwitterPoll _poll;
 
@@ -57,8 +57,7 @@ namespace TweetWatch
         {
             string fileName = AppDomain.CurrentDomain.BaseDirectory 
                 + Properties.Settings.Default.Sound;
-            if (File.Exists(fileName))
-                _newTweetSound = new SoundPlayer(fileName);
+             _newTweetSound = new AlertSound(fileName);
         }
 
         private void InitializeSiteDropdown()
@@ -131,15 +130,7 @@ namespace TweetWatch
             linkLabelTweetUrl.Text = tweet.Link;
             linkLabelTweetUrl.Visible = true;
             textBoxTweet.Text = tweet.Text;
-            PlayNewTweetSound();
-        }
-
-        private void PlayNewTweetSound()
-        {
-            if (_newTweetSound != null)
-                _newTweetSound.Play();
-            else
-                SystemSounds.Beep.Play();
+            _newTweetSound.Play();
         }
 
         private void linkLabelTweetUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
