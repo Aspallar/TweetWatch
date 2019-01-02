@@ -44,15 +44,6 @@
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panelBottom
-            // 
-            this.panelBottom.BackColor = System.Drawing.Color.DodgerBlue;
-            this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 241);
-            this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(284, 4);
-            this.panelBottom.TabIndex = 6;
-            // 
             // labelTitle
             // 
             labelTitle.AutoSize = true;
@@ -62,6 +53,15 @@
             labelTitle.Size = new System.Drawing.Size(69, 13);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "TweetWatch";
+            // 
+            // panelBottom
+            // 
+            this.panelBottom.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelBottom.Location = new System.Drawing.Point(0, 241);
+            this.panelBottom.Name = "panelBottom";
+            this.panelBottom.Size = new System.Drawing.Size(284, 4);
+            this.panelBottom.TabIndex = 6;
             // 
             // comboBoxSite
             // 

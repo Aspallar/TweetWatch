@@ -57,9 +57,10 @@ namespace TweetWatch
         protected override void WndProc(ref Message m)
         {
             const int WM_NCHITTEST = 0x84;
+            const int HTCAPTION = 2;
             if (m.Msg == WM_NCHITTEST)
             {
-                m.Result = (IntPtr)2;
+                m.Result = (IntPtr)HTCAPTION;
                 return;
             }
             base.WndProc(ref m);
@@ -127,7 +128,7 @@ namespace TweetWatch
                 await InitializeCurrentTweets();
                 while (true)
                 {
-                    await Task.Delay(10000);
+                    await Task.Delay(Properties.Settings.Default.Period);
                     await Poll();
                 }
             });
@@ -151,7 +152,7 @@ namespace TweetWatch
                             Text = tweet.QuerySelector("p.tweet-text")?.TextContent ?? ""
                         };
                         currentTweets.Add(id);
-                        Report(newTweet);
+                        ReportTweet(newTweet);
                         break; // foreach tweet
                     }
                 }
@@ -215,7 +216,7 @@ namespace TweetWatch
             }, status);
         }
 
-        public void Report(Tweet value)
+        public void ReportTweet(Tweet value)
         {
             uiContext.Post((o) =>
             {

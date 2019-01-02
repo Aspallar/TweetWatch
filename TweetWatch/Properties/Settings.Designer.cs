@@ -40,5 +40,14 @@ namespace TweetWatch.Properties {
                 return ((string)(this["Sound"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        public int Period {
+            get {
+                return ((int)(this["Period"]));
+            }
+        }
     }
 }
