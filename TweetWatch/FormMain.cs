@@ -92,7 +92,6 @@ namespace TweetWatch
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            buttonMinimize.Enabled = true;
             buttonStart.Enabled = false;
             comboBoxSite.Enabled = false;
             string site = (string)comboBoxSite.SelectedItem;
