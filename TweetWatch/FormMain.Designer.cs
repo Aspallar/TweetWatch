@@ -83,6 +83,7 @@
             this.linkLabelTweetUrl.TabIndex = 1;
             this.linkLabelTweetUrl.TabStop = true;
             this.linkLabelTweetUrl.Text = "linkLabelTweetUrl";
+            this.linkLabelTweetUrl.Visible = false;
             this.linkLabelTweetUrl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelTweetUrl_LinkClicked);
             // 
             // textBoxTweet
@@ -129,6 +130,7 @@
             this.linkLabelSite.TabIndex = 5;
             this.linkLabelSite.TabStop = true;
             this.linkLabelSite.Text = "linkLabelSite";
+            this.linkLabelSite.Visible = false;
             this.linkLabelSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSite_LinkClicked);
             // 
             // panelTop
@@ -196,7 +198,6 @@
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "TweetWatch";
-            this.Load += new System.EventHandler(this.FormMain_Load);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.ResumeLayout(false);

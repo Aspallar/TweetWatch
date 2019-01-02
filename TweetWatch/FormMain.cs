@@ -21,6 +21,7 @@ namespace TweetWatch
             InitializeComponent();
             InitializeSound();
             IntializeTooltip();
+            InitializeSiteDropdown();
             SetColor();
         }
 
@@ -60,18 +61,7 @@ namespace TweetWatch
                 _newTweetSound = new SoundPlayer(fileName);
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-            InitTweetLink();
-            InitSiteDropdown();
-        }
-
-        private void InitTweetLink()
-        {
-            linkLabelTweetUrl.Visible = false;
-        }
-
-        private void InitSiteDropdown()
+        private void InitializeSiteDropdown()
         {
             string fileName = AppDomain.CurrentDomain.BaseDirectory + "tweetsites.txt";
             if (File.Exists(fileName))
