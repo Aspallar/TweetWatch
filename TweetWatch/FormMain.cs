@@ -99,7 +99,12 @@ namespace TweetWatch
             string site = (string)comboBoxSite.SelectedItem;
             string url = baseUrl + "/" + site;
             Text += " - " + site;
-            _poll = new TwitterPoll(url, new Progress<Tweet>(NewTweet), new Progress<TwitStatus>(StatusChanged));
+            _poll = new TwitterPoll(
+                url,
+                new Progress<Tweet>(NewTweet),
+                new Progress<TwitStatus>(StatusChanged),
+                Properties.Settings.Default.Period
+            );
             _poll.Start();
         }
 

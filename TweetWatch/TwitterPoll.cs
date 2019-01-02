@@ -17,8 +17,9 @@ namespace TweetWatch
         private IProgress<Tweet> _tweetProgress;
         private IProgress<TwitStatus> _statusProgress;
         private TwitStatus _currentStatus;
+        private int _pollPeriod;
 
-        public TwitterPoll(string url, IProgress<Tweet> tweetProgress, IProgress<TwitStatus> statusProgress)
+        public TwitterPoll(string url, IProgress<Tweet> tweetProgress, IProgress<TwitStatus> statusProgress, int pollPeriod)
         {
             _parser = new HtmlParser();
             _client = new HttpClient();
@@ -26,6 +27,7 @@ namespace TweetWatch
             _statusProgress = statusProgress;
             _url = url;
             _currentStatus = TwitStatus.Stopped;
+            _pollPeriod = pollPeriod;
         }
 
         public void Start()
@@ -35,7 +37,7 @@ namespace TweetWatch
                 await InitializeCurrentTweets();
                 while (true)
                 {
-                    await Task.Delay(Properties.Settings.Default.Period);
+                    await Task.Delay(_pollPeriod);
                     await Poll();
                 }
             });
