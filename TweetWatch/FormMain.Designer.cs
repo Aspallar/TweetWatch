@@ -80,7 +80,7 @@
             this.linkLabelTweetUrl.Location = new System.Drawing.Point(12, 211);
             this.linkLabelTweetUrl.Name = "linkLabelTweetUrl";
             this.linkLabelTweetUrl.Size = new System.Drawing.Size(92, 13);
-            this.linkLabelTweetUrl.TabIndex = 1;
+            this.linkLabelTweetUrl.TabIndex = 3;
             this.linkLabelTweetUrl.TabStop = true;
             this.linkLabelTweetUrl.Text = "linkLabelTweetUrl";
             this.linkLabelTweetUrl.Visible = false;
@@ -97,6 +97,7 @@
             this.textBoxTweet.ReadOnly = true;
             this.textBoxTweet.Size = new System.Drawing.Size(256, 127);
             this.textBoxTweet.TabIndex = 2;
+            this.textBoxTweet.TabStop = false;
             // 
             // buttonStart
             // 
@@ -104,7 +105,7 @@
             this.buttonStart.Location = new System.Drawing.Point(168, 33);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(75, 23);
-            this.buttonStart.TabIndex = 3;
+            this.buttonStart.TabIndex = 1;
             this.buttonStart.Text = "Start";
             this.buttonStart.UseVisualStyleBackColor = true;
             this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
@@ -127,7 +128,7 @@
             this.linkLabelSite.Location = new System.Drawing.Point(12, 59);
             this.linkLabelSite.Name = "linkLabelSite";
             this.linkLabelSite.Size = new System.Drawing.Size(67, 13);
-            this.linkLabelSite.TabIndex = 5;
+            this.linkLabelSite.TabIndex = 2;
             this.linkLabelSite.TabStop = true;
             this.linkLabelSite.Text = "linkLabelSite";
             this.linkLabelSite.Visible = false;

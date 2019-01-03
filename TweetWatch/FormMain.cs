@@ -174,6 +174,21 @@ namespace TweetWatch
         private void buttonMinimize_Click(object sender, EventArgs e)
         {
             textBoxTweet.Focus();
+            Minimize();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.Down))
+            {
+                Minimize();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void Minimize()
+        {
             if (_notifyIcon == null)
             {
                 WindowState = FormWindowState.Minimized;
