@@ -12,7 +12,7 @@ namespace TweetWatch
     {
         private HtmlParser _parser;
         private HttpClient _client;
-        private string _url;
+        private Uri _uri;
         private HashSet<string> _currentTweets;
         private IProgress<Tweet> _tweetProgress;
         private IProgress<TwitStatus> _statusProgress;
@@ -25,7 +25,7 @@ namespace TweetWatch
             _client = new HttpClient();
             _tweetProgress = tweetProgress;
             _statusProgress = statusProgress;
-            _url = url;
+            _uri = new Uri(url);
             _currentStatus = TwitStatus.Stopped;
             _pollPeriod = pollPeriod;
         }
@@ -81,7 +81,7 @@ namespace TweetWatch
         {
             try
             {
-                var page = await _client.GetStringAsync(_url);
+                var page = await _client.GetStringAsync(_uri);
                 UpdateStatus(TwitStatus.Working);
                 var doc = _parser.Parse(page);
                 return doc;
