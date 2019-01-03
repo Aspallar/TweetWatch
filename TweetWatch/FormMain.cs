@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -14,6 +15,7 @@ namespace TweetWatch
         private AlertSound _newTweetSound;
         private ToolTip _tooltip;
         private TwitterPoll _poll;
+        private NotifyIcon _notifyIcon;
 
         public FormMain()
         {
@@ -21,7 +23,21 @@ namespace TweetWatch
             InitializeSound();
             IntializeTooltip();
             InitializeSiteDropdown();
+            InitializeNotifyIcon();
             SetColor();
+        }
+
+        private void InitializeNotifyIcon()
+        {
+            if (Properties.Settings.Default.MinimizeToSystemTray)
+            {
+                _notifyIcon = new NotifyIcon();
+                _notifyIcon.Icon = Icon;
+                _notifyIcon.Visible = false;
+                _notifyIcon.Click += notifyIcon_Click;
+                _notifyIcon.BalloonTipClicked += notifyIcon_Click;
+                _notifyIcon.Text = Text;
+            }
         }
 
         private void IntializeTooltip()
@@ -103,6 +119,8 @@ namespace TweetWatch
             string site = (string)comboBoxSite.SelectedItem;
             string url = baseUrl + "/" + site;
             Text += " - " + site;
+            if (_notifyIcon != null)
+                _notifyIcon.Text = Text;
             _poll = new TwitterPoll(
                 url,
                 new Progress<Tweet>(NewTweet),
@@ -135,6 +153,8 @@ namespace TweetWatch
             linkLabelTweetUrl.Text = tweet.Link;
             linkLabelTweetUrl.Visible = true;
             textBoxTweet.Text = tweet.Text;
+            if (_notifyIcon != null && _notifyIcon.Visible)
+                _notifyIcon.ShowBalloonTip(5000, Text, tweet.Text, ToolTipIcon.Info);
             _newTweetSound.Play();
         }
 
@@ -156,7 +176,22 @@ namespace TweetWatch
         private void buttonMinimize_Click(object sender, EventArgs e)
         {
             textBoxTweet.Focus();
-            WindowState = FormWindowState.Minimized;
+            if (_notifyIcon == null)
+            {
+                WindowState = FormWindowState.Minimized;
+            }
+            else
+            {
+                Visible = false;
+                _notifyIcon.Visible = true;
+            }
+        }
+
+        private void notifyIcon_Click(object sender, EventArgs e)
+        {
+            Visible = true;
+            _notifyIcon.Visible = false;
+            Activate();
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
