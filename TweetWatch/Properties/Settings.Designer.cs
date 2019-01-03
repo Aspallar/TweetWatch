@@ -58,5 +58,14 @@ namespace TweetWatch.Properties {
                 return ((bool)(this["MinimizeToSystemTray"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("tweetsites.txt")]
+        public string TwitListFile {
+            get {
+                return ((string)(this["TwitListFile"]));
+            }
+        }
     }
 }

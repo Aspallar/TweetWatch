@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -77,17 +76,16 @@ namespace TweetWatch
 
         private void InitializeSound()
         {
-            string fileName = AppDomain.CurrentDomain.BaseDirectory 
-                + Properties.Settings.Default.Sound;
-             _newTweetSound = new AlertSound(fileName);
+            string path = FilePath(Properties.Settings.Default.Sound);
+             _newTweetSound = new AlertSound(path);
         }
 
         private void InitializeSiteDropdown()
         {
-            string fileName = AppDomain.CurrentDomain.BaseDirectory + "tweetsites.txt";
-            if (File.Exists(fileName))
+            string path = FilePath(Properties.Settings.Default.TwitListFile);
+            if (File.Exists(path))
             {
-                var sites = File.ReadAllLines(fileName).Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+                var sites = File.ReadAllLines(path).Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
                 comboBoxSite.Items.AddRange(sites);
                 if (sites.Length > 0)
                 {
@@ -197,6 +195,13 @@ namespace TweetWatch
         private void buttonClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private string FilePath(string fileName)
+        {
+            return Path.IsPathRooted(fileName)
+                ? fileName
+                : AppDomain.CurrentDomain.BaseDirectory + fileName;
         }
     }
 }
