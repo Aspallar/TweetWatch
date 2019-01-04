@@ -200,6 +200,7 @@
             this.MaximumSize = new System.Drawing.Size(284, 245);
             this.Name = "FormMain";
             this.Text = "TweetWatch";
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.ResumeLayout(false);

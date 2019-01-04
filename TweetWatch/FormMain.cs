@@ -15,15 +15,23 @@ namespace TweetWatch
         private ToolTip _tooltip;
         private TwitterPoll _poll;
         private NotifyIcon _notifyIcon;
+        private bool _autoStart;
 
-        public FormMain()
+        public FormMain(string startSite)
         {
+            _autoStart = !string.IsNullOrEmpty(startSite);
             InitializeComponent();
             InitializeSound();
             IntializeTooltip();
-            InitializeSiteDropdown();
+            InitializeSiteDropdown(startSite);
             InitializeNotifyIcon();
             SetColor();
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            if (_autoStart)
+                StartPoll();
         }
 
         private void InitializeNotifyIcon()
@@ -80,18 +88,27 @@ namespace TweetWatch
              _newTweetSound = new AlertSound(path);
         }
 
-        private void InitializeSiteDropdown()
+        private void InitializeSiteDropdown(string startSite)
         {
-            string path = FilePath(Properties.Settings.Default.TwitListFile);
-            if (File.Exists(path))
+            if (string.IsNullOrEmpty(startSite))
             {
-                var sites = File.ReadAllLines(path).Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
-                comboBoxSite.Items.AddRange(sites);
-                if (sites.Length > 0)
+                string path = FilePath(Properties.Settings.Default.TwitListFile);
+                if (File.Exists(path))
                 {
-                    comboBoxSite.SelectedIndex = 0;
-                    SetSiteLink();
+                    var sites = File.ReadAllLines(path).Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+                    comboBoxSite.Items.AddRange(sites);
+                    if (sites.Length > 0)
+                    {
+                        comboBoxSite.SelectedIndex = 0;
+                        SetSiteLink();
+                    }
                 }
+            }
+            else
+            {
+                comboBoxSite.Items.Add(startSite);
+                comboBoxSite.SelectedIndex = 0;
+                SetSiteLink();
             }
         }
 
@@ -111,7 +128,12 @@ namespace TweetWatch
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
-        { 
+        {
+            StartPoll();
+        }
+
+        private void StartPoll()
+        {
             buttonStart.Enabled = false;
             comboBoxSite.Enabled = false;
             string site = (string)comboBoxSite.SelectedItem;
@@ -190,20 +212,14 @@ namespace TweetWatch
         private void Minimize()
         {
             if (_notifyIcon == null)
-            {
                 WindowState = FormWindowState.Minimized;
-            }
             else
-            {
-                Visible = false;
-                _notifyIcon.Visible = true;
-            }
+                SystemTrayMinimized(true);
         }
 
         private void notifyIcon_Click(object sender, EventArgs e)
         {
-            Visible = true;
-            _notifyIcon.Visible = false;
+            SystemTrayMinimized(false);
             Activate();
         }
 
@@ -212,11 +228,18 @@ namespace TweetWatch
             Close();
         }
 
+        private void SystemTrayMinimized(bool isMinimized)
+        {
+            Visible = !isMinimized;
+            _notifyIcon.Visible = isMinimized;
+        }
+
         private string FilePath(string fileName)
         {
             return Path.IsPathRooted(fileName)
                 ? fileName
                 : AppDomain.CurrentDomain.BaseDirectory + fileName;
         }
+
     }
 }
