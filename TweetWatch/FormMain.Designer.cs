@@ -40,6 +40,7 @@
             this.panelTop = new System.Windows.Forms.Panel();
             this.buttonMinimize = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
+            this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             labelTitle = new System.Windows.Forms.Label();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
@@ -177,12 +178,26 @@
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
+            // linkLabelAbout
+            // 
+            this.linkLabelAbout.AutoSize = true;
+            this.linkLabelAbout.LinkColor = System.Drawing.Color.White;
+            this.linkLabelAbout.Location = new System.Drawing.Point(181, 225);
+            this.linkLabelAbout.Name = "linkLabelAbout";
+            this.linkLabelAbout.Size = new System.Drawing.Size(100, 13);
+            this.linkLabelAbout.TabIndex = 10;
+            this.linkLabelAbout.TabStop = true;
+            this.linkLabelAbout.Text = "About TweetWatch";
+            this.linkLabelAbout.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ClientSize = new System.Drawing.Size(284, 245);
+            this.Controls.Add(this.linkLabelAbout);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonMinimize);
             this.Controls.Add(this.panelTop);
@@ -220,6 +235,7 @@
         private System.Windows.Forms.Button buttonMinimize;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Panel panelBottom;
+        private System.Windows.Forms.LinkLabel linkLabelAbout;
     }
 }
 

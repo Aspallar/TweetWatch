@@ -241,5 +241,10 @@ namespace TweetWatch
                 : AppDomain.CurrentDomain.BaseDirectory + fileName;
         }
 
+        private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            using (FormAbout formAbout = new FormAbout())
+                formAbout.ShowDialog(this);
+        }
     }
 }
