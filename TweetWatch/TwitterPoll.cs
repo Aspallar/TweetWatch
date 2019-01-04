@@ -34,17 +34,19 @@ namespace TweetWatch
         {
             Task.Run(async () =>
             {
-                await InitializeCurrentTweets();
                 while (true)
                 {
-                    await Task.Delay(_pollPeriod);
-                    await Poll();
+                    if (_currentTweets == null)
+                        await InitializeCurrentTweets();
+                    else
+                        await PollForNewTweets();
                 }
             });
         }
 
-        private async Task Poll()
+        private async Task PollForNewTweets()
         {
+            await Task.Delay(_pollPeriod);
             IHtmlDocument doc = await GetTwitter();
             if (doc != null)
             {
@@ -74,6 +76,10 @@ namespace TweetWatch
             {
                 _currentTweets = new HashSet<string>(doc.QuerySelectorAll("div.tweet")
                     .Select(x => x.GetAttribute("data-tweet-id")));
+            }
+            else
+            {
+                await Task.Delay(_pollPeriod);
             }
         }
 
