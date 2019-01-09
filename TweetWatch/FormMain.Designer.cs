@@ -208,13 +208,16 @@
             this.Controls.Add(this.linkLabelTweetUrl);
             this.Controls.Add(this.comboBoxSite);
             this.Controls.Add(this.textBoxTweet);
+            this.DataBindings.Add(new System.Windows.Forms.Binding("Location", global::TweetWatch.Properties.Settings.Default, "Location", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = global::TweetWatch.Properties.Settings.Default.Location;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(284, 245);
             this.Name = "FormMain";
             this.Text = "TweetWatch";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();

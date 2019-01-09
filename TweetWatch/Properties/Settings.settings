@@ -17,5 +17,8 @@
     <Setting Name="TwitListFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">tweetsites.txt</Value>
     </Setting>
+    <Setting Name="Location" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

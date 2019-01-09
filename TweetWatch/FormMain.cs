@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace TweetWatch
@@ -145,7 +146,8 @@ namespace TweetWatch
                 url,
                 new Progress<Tweet>(NewTweet),
                 new Progress<TwitStatus>(StatusChanged),
-                Properties.Settings.Default.Period
+                Properties.Settings.Default.Period,
+                $"TweetWatch/{Assembly.GetExecutingAssembly().Version()}"
             );
             _poll.Start();
         }
@@ -172,7 +174,7 @@ namespace TweetWatch
         {
             linkLabelTweetUrl.Text = tweet.Link;
             linkLabelTweetUrl.Visible = true;
-            textBoxTweet.Text = tweet.Text;
+            textBoxTweet.Text = tweet.Time.ToString() + "\r\n" + tweet.Text;
             if (_notifyIcon != null && _notifyIcon.Visible)
                 _notifyIcon.ShowBalloonTip(5000, Text, tweet.Text, ToolTipIcon.Info);
             _newTweetSound.Play();
@@ -245,6 +247,11 @@ namespace TweetWatch
         {
             using (FormAbout formAbout = new FormAbout())
                 formAbout.ShowDialog(this);
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }

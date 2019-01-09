@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace TweetWatch
@@ -19,10 +20,11 @@ namespace TweetWatch
         private TwitStatus _currentStatus;
         private int _pollPeriod;
 
-        public TwitterPoll(string url, IProgress<Tweet> tweetProgress, IProgress<TwitStatus> statusProgress, int pollPeriod)
+        public TwitterPoll(string url, IProgress<Tweet> tweetProgress, IProgress<TwitStatus> statusProgress, int pollPeriod, string userAgent)
         {
             _parser = new HtmlParser();
             _client = new HttpClient();
+            _client.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
             _tweetProgress = tweetProgress;
             _statusProgress = statusProgress;
             _uri = new Uri(url);
@@ -56,8 +58,10 @@ namespace TweetWatch
                     string id = tweet.GetAttribute("data-tweet-id");
                     if (!_currentTweets.Contains(id))
                     {
+                        string time = tweet.QuerySelector("span._timestamp").GetAttribute("data-time-ms");
                         Tweet newTweet = new Tweet
                         {
+                            Time = UnixTime.FromMilliseconds(long.Parse(time)),
                             Link = tweet.GetAttribute("data-permalink-path"),
                             Text = tweet.QuerySelector("p.tweet-text")?.TextContent ?? ""
                         };
