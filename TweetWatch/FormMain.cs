@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -17,10 +19,12 @@ namespace TweetWatch
         private TwitterPoll _poll;
         private NotifyIcon _notifyIcon;
         private bool _autoStart;
+        private BindingList<string> _sites;
 
         public FormMain(string startSite)
         {
             _autoStart = !string.IsNullOrEmpty(startSite);
+            _sites = new BindingList<string>();
             InitializeComponent();
             InitializeSound();
             IntializeTooltip();
@@ -97,20 +101,25 @@ namespace TweetWatch
                 if (File.Exists(path))
                 {
                     var sites = File.ReadAllLines(path).Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
-                    comboBoxSite.Items.AddRange(sites);
-                    if (sites.Length > 0)
-                    {
-                        comboBoxSite.SelectedIndex = 0;
-                        SetSiteLink();
-                    }
+                    foreach (string site in sites)
+                        _sites.Add(site);
                 }
             }
             else
             {
-                comboBoxSite.Items.Add(startSite);
+                _sites.Add(startSite);
+            }
+            comboBoxSite.DataSource = _sites;
+            if (_sites.Count > 0)
+            {
                 comboBoxSite.SelectedIndex = 0;
                 SetSiteLink();
             }
+        }
+
+        private void SaveSites()
+        {
+            File.WriteAllLines(FilePath(Properties.Settings.Default.TwitListFile), _sites.ToArray());
         }
 
         private void SetSiteLink()
@@ -252,6 +261,25 @@ namespace TweetWatch
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Save();
+        }
+
+        private void FormMain_DragEnter(object sender, DragEventArgs e)
+        {
+            DragDropEffects effect = DragDropEffects.None;
+            if (e.Data.GetDataPresent("Text"))
+            {
+                string data = e.Data.GetData("Text").ToString();
+                if (data.StartsWith("https://twitter.com/") && !_sites.Contains(Path.GetFileName(data)))
+                    effect = DragDropEffects.Copy;
+            }
+            e.Effect = effect;
+        }
+
+        private void FormMain_DragDrop(object sender, DragEventArgs e)
+        {
+            string site = Path.GetFileName(e.Data.GetData("Text").ToString());
+            _sites.Add(site);
+            SaveSites();
         }
     }
 }

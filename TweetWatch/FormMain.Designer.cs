@@ -193,6 +193,7 @@
             // 
             // FormMain
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
@@ -216,9 +217,12 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(284, 245);
             this.Name = "FormMain";
+            this.RightToLeftLayout = true;
             this.Text = "TweetWatch";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormMain_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FormMain_DragEnter);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.ResumeLayout(false);
