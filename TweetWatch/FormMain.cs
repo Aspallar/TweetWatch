@@ -19,18 +19,19 @@ namespace TweetWatch
         private TwitterPoll _poll;
         private NotifyIcon _notifyIcon;
         private bool _autoStart;
-        private BindingList<string> _sites;
+        private SiteBindingList _sites;
+        private bool _started;
 
         public FormMain(string startSite)
         {
             _autoStart = !string.IsNullOrEmpty(startSite);
-            _sites = new BindingList<string>();
             InitializeComponent();
             InitializeSound();
             IntializeTooltip();
             InitializeSiteDropdown(startSite);
             InitializeNotifyIcon();
             SetColor();
+            UpdateUI();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -95,31 +96,19 @@ namespace TweetWatch
 
         private void InitializeSiteDropdown(string startSite)
         {
-            if (string.IsNullOrEmpty(startSite))
-            {
-                string path = FilePath(Properties.Settings.Default.TwitListFile);
-                if (File.Exists(path))
-                {
-                    var sites = File.ReadAllLines(path).Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
-                    foreach (string site in sites)
-                        _sites.Add(site);
-                }
-            }
-            else
-            {
-                _sites.Add(startSite);
-            }
+            _sites = SiteBindingList.LoadFromFile(Properties.Settings.Default.TwitListPath);
+            int selectedIndex = string.IsNullOrEmpty(startSite) ? 0 : _sites.AddUnique(startSite);
             comboBoxSite.DataSource = _sites;
             if (_sites.Count > 0)
             {
-                comboBoxSite.SelectedIndex = 0;
+                comboBoxSite.SelectedIndex = selectedIndex;
                 SetSiteLink();
             }
         }
 
         private void SaveSites()
         {
-            File.WriteAllLines(FilePath(Properties.Settings.Default.TwitListFile), _sites.ToArray());
+            SiteBindingList.SaveToFile(_sites, Properties.Settings.Default.TwitListPath);
         }
 
         private void SetSiteLink()
@@ -144,8 +133,8 @@ namespace TweetWatch
 
         private void StartPoll()
         {
-            buttonStart.Enabled = false;
-            comboBoxSite.Enabled = false;
+            _started = true;
+            UpdateUI();
             string site = (string)comboBoxSite.SelectedItem;
             string url = baseUrl + "/" + site;
             Text += " - " + site;
@@ -159,6 +148,13 @@ namespace TweetWatch
                 $"TweetWatch/{Assembly.GetExecutingAssembly().Version()}"
             );
             _poll.Start();
+        }
+
+        private void UpdateUI()
+        {
+            bool enabled = !_started && _sites.Count > 0;
+            buttonStart.Enabled = enabled;
+            comboBoxSite.Enabled = enabled;
         }
 
         private void StatusChanged(TwitStatus status)
@@ -279,6 +275,12 @@ namespace TweetWatch
         {
             string site = Path.GetFileName(e.Data.GetData("Text").ToString());
             _sites.Add(site);
+            if (_sites.Count == 1)
+            {
+                comboBoxSite.SelectedIndex = 0;
+                SetSiteLink();
+            }
+            UpdateUI();
             SaveSites();
         }
     }

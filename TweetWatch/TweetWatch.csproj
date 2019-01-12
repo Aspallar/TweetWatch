@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="AlertSound.cs" />
     <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="SiteBindingList.cs" />
     <Compile Include="UnixTime.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
