@@ -283,5 +283,17 @@ namespace TweetWatch
             UpdateUI();
             SaveSites();
         }
+
+        private void linkLabelSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            using (FormSettings formSettings = new FormSettings())
+            {
+                if (formSettings.ShowDialog(this) == DialogResult.OK)
+                {
+                    InitializeSound();
+                    SetColor();
+                }
+            }
+        }
     }
 }

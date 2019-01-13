@@ -23,39 +23,51 @@ namespace TweetWatch.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("DodgerBlue")]
         public string ColorString {
             get {
                 return ((string)(this["ColorString"]));
             }
+            set {
+                this["ColorString"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Twitalert.wav")]
         public string Sound {
             get {
                 return ((string)(this["Sound"]));
             }
+            set {
+                this["Sound"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10000")]
         public int Period {
             get {
                 return ((int)(this["Period"]));
             }
+            set {
+                this["Period"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool MinimizeToSystemTray {
             get {
                 return ((bool)(this["MinimizeToSystemTray"]));
+            }
+            set {
+                this["MinimizeToSystemTray"] = value;
             }
         }
         

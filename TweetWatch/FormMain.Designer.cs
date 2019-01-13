@@ -41,6 +41,7 @@
             this.buttonMinimize = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
+            this.linkLabelSettings = new System.Windows.Forms.LinkLabel();
             labelTitle = new System.Windows.Forms.Label();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
@@ -191,6 +192,19 @@
             this.linkLabelAbout.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
             // 
+            // linkLabelSettings
+            // 
+            this.linkLabelSettings.AutoSize = true;
+            this.linkLabelSettings.LinkColor = System.Drawing.Color.White;
+            this.linkLabelSettings.Location = new System.Drawing.Point(12, 225);
+            this.linkLabelSettings.Name = "linkLabelSettings";
+            this.linkLabelSettings.Size = new System.Drawing.Size(45, 13);
+            this.linkLabelSettings.TabIndex = 11;
+            this.linkLabelSettings.TabStop = true;
+            this.linkLabelSettings.Text = "Settings";
+            this.linkLabelSettings.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.linkLabelSettings.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSettings_LinkClicked);
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
@@ -198,6 +212,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ClientSize = new System.Drawing.Size(284, 245);
+            this.Controls.Add(this.linkLabelSettings);
             this.Controls.Add(this.linkLabelAbout);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonMinimize);
@@ -243,6 +258,7 @@
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.LinkLabel linkLabelAbout;
+        private System.Windows.Forms.LinkLabel linkLabelSettings;
     }
 }
 

@@ -2,16 +2,16 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TweetWatch.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ColorString" Type="System.String" Scope="Application">
+    <Setting Name="ColorString" Type="System.String" Scope="User">
       <Value Profile="(Default)">DodgerBlue</Value>
     </Setting>
-    <Setting Name="Sound" Type="System.String" Scope="Application">
+    <Setting Name="Sound" Type="System.String" Scope="User">
       <Value Profile="(Default)">Twitalert.wav</Value>
     </Setting>
-    <Setting Name="Period" Type="System.Int32" Scope="Application">
+    <Setting Name="Period" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10000</Value>
     </Setting>
-    <Setting Name="MinimizeToSystemTray" Type="System.Boolean" Scope="Application">
+    <Setting Name="MinimizeToSystemTray" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="TwitListFile" Type="System.String" Scope="Application">
