@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -144,7 +141,7 @@ namespace TweetWatch
                 url,
                 new Progress<Tweet>(NewTweet),
                 new Progress<TwitStatus>(StatusChanged),
-                Properties.Settings.Default.Period,
+                1000 * Properties.Settings.Default.Period,
                 $"TweetWatch/{Assembly.GetExecutingAssembly().Version()}"
             );
             _poll.Start();

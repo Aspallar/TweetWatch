@@ -49,7 +49,7 @@ namespace TweetWatch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int Period {
             get {
                 return ((int)(this["Period"]));

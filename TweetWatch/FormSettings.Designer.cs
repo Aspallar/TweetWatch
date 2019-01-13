@@ -33,13 +33,13 @@
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Panel panel2;
             System.Windows.Forms.Label label2;
-            System.Windows.Forms.Panel panel3;
-            System.Windows.Forms.Label label3;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             System.Windows.Forms.Panel panel4;
             System.Windows.Forms.Label label4;
             this.numericUpDownPollPeriod = new System.Windows.Forms.NumericUpDown();
             this.checkBoxMinimizeToTray = new System.Windows.Forms.CheckBox();
+            this.panelColorContainer = new System.Windows.Forms.Panel();
+            this.labelColor = new System.Windows.Forms.Label();
             this.textBoxColor = new System.Windows.Forms.TextBox();
             this.buttonChooseColor = new System.Windows.Forms.Button();
             this.panelColor = new System.Windows.Forms.Panel();
@@ -57,14 +57,12 @@
             label1 = new System.Windows.Forms.Label();
             panel2 = new System.Windows.Forms.Panel();
             label2 = new System.Windows.Forms.Label();
-            panel3 = new System.Windows.Forms.Panel();
-            label3 = new System.Windows.Forms.Label();
             panel4 = new System.Windows.Forms.Panel();
             label4 = new System.Windows.Forms.Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPollPeriod)).BeginInit();
             panel2.SuspendLayout();
-            panel3.SuspendLayout();
+            this.panelColorContainer.SuspendLayout();
             panel4.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
@@ -119,10 +117,10 @@
             0,
             0});
             this.numericUpDownPollPeriod.Name = "numericUpDownPollPeriod";
-            this.numericUpDownPollPeriod.Size = new System.Drawing.Size(120, 22);
+            this.numericUpDownPollPeriod.Size = new System.Drawing.Size(87, 22);
             this.numericUpDownPollPeriod.TabIndex = 1;
             this.numericUpDownPollPeriod.Value = new decimal(new int[] {
-            1000,
+            10,
             0,
             0,
             0});
@@ -158,25 +156,25 @@
             this.checkBoxMinimizeToTray.Text = "Minimize To System Tray";
             this.checkBoxMinimizeToTray.UseVisualStyleBackColor = true;
             // 
-            // panel3
+            // panelColorContainer
             // 
-            panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            panel3.Controls.Add(label3);
-            panel3.Controls.Add(this.textBoxColor);
-            panel3.Controls.Add(this.buttonChooseColor);
-            panel3.Controls.Add(this.panelColor);
-            panel3.Location = new System.Drawing.Point(13, 243);
-            panel3.Name = "panel3";
-            panel3.Size = new System.Drawing.Size(775, 101);
-            panel3.TabIndex = 21;
+            this.panelColorContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.panelColorContainer.Controls.Add(this.labelColor);
+            this.panelColorContainer.Controls.Add(this.textBoxColor);
+            this.panelColorContainer.Controls.Add(this.buttonChooseColor);
+            this.panelColorContainer.Controls.Add(this.panelColor);
+            this.panelColorContainer.Location = new System.Drawing.Point(13, 243);
+            this.panelColorContainer.Name = "panelColorContainer";
+            this.panelColorContainer.Size = new System.Drawing.Size(775, 101);
+            this.panelColorContainer.TabIndex = 21;
             // 
-            // label3
+            // labelColor
             // 
-            label3.Location = new System.Drawing.Point(14, 11);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(742, 44);
-            label3.TabIndex = 0;
-            label3.Text = resources.GetString("label3.Text");
+            this.labelColor.Location = new System.Drawing.Point(14, 11);
+            this.labelColor.Name = "labelColor";
+            this.labelColor.Size = new System.Drawing.Size(742, 44);
+            this.labelColor.TabIndex = 0;
+            this.labelColor.Text = resources.GetString("labelColor.Text");
             // 
             // textBoxColor
             // 
@@ -252,7 +250,6 @@
             // 
             // buttonClose
             // 
-            this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClose.Location = new System.Drawing.Point(686, 490);
             this.buttonClose.Name = "buttonClose";
@@ -326,7 +323,7 @@
             this.ClientSize = new System.Drawing.Size(800, 547);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(panel4);
-            this.Controls.Add(panel3);
+            this.Controls.Add(this.panelColorContainer);
             this.Controls.Add(panel2);
             this.Controls.Add(panel1);
             this.Controls.Add(this.buttonTitleClose);
@@ -344,8 +341,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPollPeriod)).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
+            this.panelColorContainer.ResumeLayout(false);
+            this.panelColorContainer.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             this.panelTop.ResumeLayout(false);
@@ -370,5 +367,7 @@
         private System.Windows.Forms.Button buttonSound;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Label labelColor;
+        private System.Windows.Forms.Panel panelColorContainer;
     }
 }

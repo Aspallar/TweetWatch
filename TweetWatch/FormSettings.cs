@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using TweetWatch.Properties;
 
@@ -7,6 +9,8 @@ namespace TweetWatch
 {
     public partial class FormSettings : Form
     {
+        private readonly Color errorColor = Color.Red;
+
         public FormSettings()
         {
             InitializeComponent();
@@ -62,7 +66,21 @@ namespace TweetWatch
 
         private bool Valid()
         {
-            return true;
+            bool valid = ValidateColor();
+            return valid;
+        }
+
+        private bool ValidateColor()
+        {
+            string color = textBoxColor.Text.Trim();
+            textBoxColor.Text = color;
+            bool valid = Settings.IsValidColorString(color);
+            if (!valid)
+            {
+                panelColorContainer.BackColor = errorColor;
+                textBoxColor.Focus();
+            }
+            return valid;
         }
 
         private void InitializeFromApplicationSettings()
