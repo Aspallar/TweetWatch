@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using TweetWatch.Properties;
 
@@ -10,30 +8,23 @@ namespace TweetWatch
     public partial class FormSettings : Form
     {
         private readonly Color errorColor = Color.Red;
+        private FormDrag _formDrag = new FormDrag();
 
         public FormSettings()
         {
             InitializeComponent();
             InitializeFromApplicationSettings();
+            SetColor();
+            _formDrag.AddSource(panelTop);
+            _formDrag.AddSource(labelTitle);
         }
 
-        private readonly IntPtr HTCAPTION = new IntPtr(0x2);
-
-        protected override void WndProc(ref Message m)
+        private void SetColor()
         {
-            const int WM_NCHITTEST = 0x84;
-            const int WM_SYSCOMMAND = 0x112;
-            const int SC_MAXIMIZE = 0xF030;
-            if (m.Msg == WM_NCHITTEST)
-            {
-                m.Result = HTCAPTION;
-                return;
-            }
-            else if (m.Msg == WM_SYSCOMMAND && (m.WParam.ToInt32() & 0xFFF0) == SC_MAXIMIZE)
-            {
-                return; // don't allow maximize (via caption double click)
-            }
-            base.WndProc(ref m);
+            Color color = Properties.Settings.Default.Color;
+            panelBottom.BackColor = color;
+            panelTop.BackColor = color;
+            buttonTitleClose.ForeColor = color;
         }
 
         private void buttonChooseColor_Click(object sender, EventArgs e)
@@ -49,9 +40,7 @@ namespace TweetWatch
         private void buttonSound_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
                 textBoxSound.Text = openFileDialog.FileName;
-            }
         }
 
         private void buttonClose_Click(object sender, EventArgs e)

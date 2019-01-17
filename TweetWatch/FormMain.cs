@@ -18,6 +18,7 @@ namespace TweetWatch
         private bool _autoStart;
         private SiteBindingList _sites;
         private bool _started;
+        private FormDrag _formDrag = new FormDrag();
 
         public FormMain(string startSite)
         {
@@ -29,6 +30,8 @@ namespace TweetWatch
             InitializeNotifyIcon();
             SetColor();
             UpdateUI();
+            _formDrag.AddSource(panelTop);
+            _formDrag.AddSource(labelTitle);
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -64,25 +67,6 @@ namespace TweetWatch
             panelBottom.BackColor = color;
             buttonClose.ForeColor = color;
             buttonMinimize.ForeColor = color;
-        }
-
-        private readonly IntPtr HTCAPTION = new IntPtr(0x2);
-
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_NCHITTEST = 0x84;
-            const int WM_SYSCOMMAND = 0x112;
-            const int SC_MAXIMIZE = 0xF030;
-            if (m.Msg == WM_NCHITTEST)
-            {
-                m.Result = HTCAPTION;
-                return;
-            }
-            else if (m.Msg == WM_SYSCOMMAND && (m.WParam.ToInt32() & 0xFFF0) == SC_MAXIMIZE)
-            {
-                return; // don't allow maximize (via caption double click)
-            }
-            base.WndProc(ref m);
         }
 
         private void InitializeSound()

@@ -28,56 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label labelTitle;
-            System.Windows.Forms.Panel panelLeft;
-            System.Windows.Forms.Panel panelRight;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAbout));
+            this.panelLeft = new System.Windows.Forms.Panel();
+            this.panelRight = new System.Windows.Forms.Panel();
+            this.labelTitle = new System.Windows.Forms.Label();
             this.panelTop = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelCopyright = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            labelTitle = new System.Windows.Forms.Label();
-            panelLeft = new System.Windows.Forms.Panel();
-            panelRight = new System.Windows.Forms.Panel();
+            this.control1 = new System.Windows.Forms.Control();
             this.panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // labelTitle
-            // 
-            labelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            labelTitle.AutoSize = true;
-            labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            labelTitle.Location = new System.Drawing.Point(3, 7);
-            labelTitle.Name = "labelTitle";
-            labelTitle.Size = new System.Drawing.Size(195, 26);
-            labelTitle.TabIndex = 0;
-            labelTitle.Text = "About TweetWatch";
-            // 
             // panelLeft
             // 
-            panelLeft.BackColor = System.Drawing.Color.DodgerBlue;
-            panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            panelLeft.Location = new System.Drawing.Point(0, 38);
-            panelLeft.Name = "panelLeft";
-            panelLeft.Size = new System.Drawing.Size(1, 174);
-            panelLeft.TabIndex = 12;
+            this.panelLeft.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelLeft.Location = new System.Drawing.Point(0, 38);
+            this.panelLeft.Name = "panelLeft";
+            this.panelLeft.Size = new System.Drawing.Size(1, 174);
+            this.panelLeft.TabIndex = 12;
             // 
             // panelRight
             // 
-            panelRight.BackColor = System.Drawing.Color.DodgerBlue;
-            panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            panelRight.Location = new System.Drawing.Point(391, 38);
-            panelRight.Name = "panelRight";
-            panelRight.Size = new System.Drawing.Size(1, 174);
-            panelRight.TabIndex = 13;
+            this.panelRight.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelRight.Location = new System.Drawing.Point(391, 38);
+            this.panelRight.Name = "panelRight";
+            this.panelRight.Size = new System.Drawing.Size(1, 174);
+            this.panelRight.TabIndex = 13;
+            // 
+            // labelTitle
+            // 
+            this.labelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.labelTitle.AutoSize = true;
+            this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitle.Location = new System.Drawing.Point(3, 7);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(195, 26);
+            this.labelTitle.TabIndex = 0;
+            this.labelTitle.Text = "About TweetWatch";
             // 
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.DodgerBlue;
-            this.panelTop.Controls.Add(labelTitle);
+            this.panelTop.Controls.Add(this.labelTitle);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
@@ -144,6 +142,14 @@
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             // 
+            // control1
+            // 
+            this.control1.Location = new System.Drawing.Point(0, 0);
+            this.control1.Name = "control1";
+            this.control1.Size = new System.Drawing.Size(0, 0);
+            this.control1.TabIndex = 0;
+            this.control1.Text = "control1";
+            // 
             // FormAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -154,8 +160,8 @@
             this.Controls.Add(this.labelCopyright);
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.panelBottom);
-            this.Controls.Add(panelRight);
-            this.Controls.Add(panelLeft);
+            this.Controls.Add(this.panelRight);
+            this.Controls.Add(this.panelLeft);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panelTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -177,5 +183,9 @@
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Control control1;
+        private System.Windows.Forms.Panel panelLeft;
+        private System.Windows.Forms.Panel panelRight;
     }
 }

@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label labelTitle;
             System.Windows.Forms.Panel panel1;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Panel panel2;
             System.Windows.Forms.Label label2;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             System.Windows.Forms.Panel panel4;
             System.Windows.Forms.Label label4;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.numericUpDownPollPeriod = new System.Windows.Forms.NumericUpDown();
             this.checkBoxMinimizeToTray = new System.Windows.Forms.CheckBox();
+            this.textBoxSound = new System.Windows.Forms.TextBox();
+            this.buttonSound = new System.Windows.Forms.Button();
+            this.labelTitle = new System.Windows.Forms.Label();
             this.panelColorContainer = new System.Windows.Forms.Panel();
             this.labelColor = new System.Windows.Forms.Label();
             this.textBoxColor = new System.Windows.Forms.TextBox();
             this.buttonChooseColor = new System.Windows.Forms.Button();
             this.panelColor = new System.Windows.Forms.Panel();
-            this.textBoxSound = new System.Windows.Forms.TextBox();
-            this.buttonSound = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.buttonTitleClose = new System.Windows.Forms.Button();
@@ -52,7 +52,6 @@
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.buttonCancel = new System.Windows.Forms.Button();
-            labelTitle = new System.Windows.Forms.Label();
             panel1 = new System.Windows.Forms.Panel();
             label1 = new System.Windows.Forms.Label();
             panel2 = new System.Windows.Forms.Panel();
@@ -62,21 +61,10 @@
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPollPeriod)).BeginInit();
             panel2.SuspendLayout();
-            this.panelColorContainer.SuspendLayout();
             panel4.SuspendLayout();
+            this.panelColorContainer.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // labelTitle
-            // 
-            labelTitle.AutoSize = true;
-            labelTitle.Enabled = false;
-            labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            labelTitle.Location = new System.Drawing.Point(4, 4);
-            labelTitle.Name = "labelTitle";
-            labelTitle.Size = new System.Drawing.Size(186, 24);
-            labelTitle.TabIndex = 0;
-            labelTitle.Text = "TweetWatch Settings";
             // 
             // panel1
             // 
@@ -156,6 +144,59 @@
             this.checkBoxMinimizeToTray.Text = "Minimize To System Tray";
             this.checkBoxMinimizeToTray.UseVisualStyleBackColor = true;
             // 
+            // panel4
+            // 
+            panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            panel4.Controls.Add(label4);
+            panel4.Controls.Add(this.textBoxSound);
+            panel4.Controls.Add(this.buttonSound);
+            panel4.Location = new System.Drawing.Point(13, 363);
+            panel4.Name = "panel4";
+            panel4.Size = new System.Drawing.Size(775, 101);
+            panel4.TabIndex = 22;
+            // 
+            // label4
+            // 
+            label4.Location = new System.Drawing.Point(14, 11);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(742, 44);
+            label4.TabIndex = 0;
+            label4.Text = "Specify the name of the wav file to use as the alert sound. If just a file name w" +
+    "ithout a full path is entered the TweetWatch will look for the file in the Tweet" +
+    "Watch  application folder.";
+            // 
+            // textBoxSound
+            // 
+            this.textBoxSound.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxSound.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxSound.Location = new System.Drawing.Point(17, 58);
+            this.textBoxSound.MinimumSize = new System.Drawing.Size(148, 24);
+            this.textBoxSound.Name = "textBoxSound";
+            this.textBoxSound.Size = new System.Drawing.Size(607, 24);
+            this.textBoxSound.TabIndex = 15;
+            // 
+            // buttonSound
+            // 
+            this.buttonSound.FlatAppearance.BorderSize = 0;
+            this.buttonSound.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSound.Location = new System.Drawing.Point(630, 58);
+            this.buttonSound.Name = "buttonSound";
+            this.buttonSound.Size = new System.Drawing.Size(114, 23);
+            this.buttonSound.TabIndex = 18;
+            this.buttonSound.Text = "Choose sound...";
+            this.buttonSound.UseVisualStyleBackColor = true;
+            this.buttonSound.Click += new System.EventHandler(this.buttonSound_Click);
+            // 
+            // labelTitle
+            // 
+            this.labelTitle.AutoSize = true;
+            this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitle.Location = new System.Drawing.Point(4, 4);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(186, 24);
+            this.labelTitle.TabIndex = 0;
+            this.labelTitle.Text = "TweetWatch Settings";
+            // 
             // panelColorContainer
             // 
             this.panelColorContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
@@ -205,49 +246,6 @@
             this.panelColor.Size = new System.Drawing.Size(43, 24);
             this.panelColor.TabIndex = 17;
             // 
-            // panel4
-            // 
-            panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            panel4.Controls.Add(label4);
-            panel4.Controls.Add(this.textBoxSound);
-            panel4.Controls.Add(this.buttonSound);
-            panel4.Location = new System.Drawing.Point(13, 363);
-            panel4.Name = "panel4";
-            panel4.Size = new System.Drawing.Size(775, 101);
-            panel4.TabIndex = 22;
-            // 
-            // label4
-            // 
-            label4.Location = new System.Drawing.Point(14, 11);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(742, 44);
-            label4.TabIndex = 0;
-            label4.Text = "Specify the name of the wav file to use as the alert sound. If just a file name w" +
-    "ithout a full path is entered the TweetWatch will look for the file in the Tweet" +
-    "Watch  application folder.";
-            // 
-            // textBoxSound
-            // 
-            this.textBoxSound.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxSound.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxSound.Location = new System.Drawing.Point(17, 58);
-            this.textBoxSound.MinimumSize = new System.Drawing.Size(148, 24);
-            this.textBoxSound.Name = "textBoxSound";
-            this.textBoxSound.Size = new System.Drawing.Size(607, 24);
-            this.textBoxSound.TabIndex = 15;
-            // 
-            // buttonSound
-            // 
-            this.buttonSound.FlatAppearance.BorderSize = 0;
-            this.buttonSound.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSound.Location = new System.Drawing.Point(630, 58);
-            this.buttonSound.Name = "buttonSound";
-            this.buttonSound.Size = new System.Drawing.Size(114, 23);
-            this.buttonSound.TabIndex = 18;
-            this.buttonSound.Text = "Choose sound...";
-            this.buttonSound.UseVisualStyleBackColor = true;
-            this.buttonSound.Click += new System.EventHandler(this.buttonSound_Click);
-            // 
             // buttonClose
             // 
             this.buttonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -287,8 +285,7 @@
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.DodgerBlue;
-            this.panelTop.Controls.Add(labelTitle);
-            this.panelTop.Enabled = false;
+            this.panelTop.Controls.Add(this.labelTitle);
             this.panelTop.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Margin = new System.Windows.Forms.Padding(0);
@@ -341,10 +338,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPollPeriod)).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            this.panelColorContainer.ResumeLayout(false);
-            this.panelColorContainer.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            this.panelColorContainer.ResumeLayout(false);
+            this.panelColorContainer.PerformLayout();
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.ResumeLayout(false);
@@ -369,5 +366,6 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelColor;
         private System.Windows.Forms.Panel panelColorContainer;
+        private System.Windows.Forms.Label labelTitle;
     }
 }

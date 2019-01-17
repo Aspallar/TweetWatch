@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label labelTitle;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            this.labelTitle = new System.Windows.Forms.Label();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.comboBoxSite = new System.Windows.Forms.ComboBox();
             this.linkLabelTweetUrl = new System.Windows.Forms.LinkLabel();
@@ -42,19 +42,17 @@
             this.buttonClose = new System.Windows.Forms.Button();
             this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.linkLabelSettings = new System.Windows.Forms.LinkLabel();
-            labelTitle = new System.Windows.Forms.Label();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTitle
             // 
-            labelTitle.AutoSize = true;
-            labelTitle.Enabled = false;
-            labelTitle.Location = new System.Drawing.Point(4, 4);
-            labelTitle.Name = "labelTitle";
-            labelTitle.Size = new System.Drawing.Size(69, 13);
-            labelTitle.TabIndex = 0;
-            labelTitle.Text = "TweetWatch";
+            this.labelTitle.AutoSize = true;
+            this.labelTitle.Location = new System.Drawing.Point(4, 4);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(69, 13);
+            this.labelTitle.TabIndex = 0;
+            this.labelTitle.Text = "TweetWatch";
             // 
             // panelBottom
             // 
@@ -139,8 +137,7 @@
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.DodgerBlue;
-            this.panelTop.Controls.Add(labelTitle);
-            this.panelTop.Enabled = false;
+            this.panelTop.Controls.Add(this.labelTitle);
             this.panelTop.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Margin = new System.Windows.Forms.Padding(0);
@@ -259,6 +256,7 @@
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.LinkLabel linkLabelAbout;
         private System.Windows.Forms.LinkLabel linkLabelSettings;
+        private System.Windows.Forms.Label labelTitle;
     }
 }
 
