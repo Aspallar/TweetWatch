@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -124,7 +125,7 @@ namespace TweetWatch
             _poll = new TwitterPoll(
                 url,
                 new Progress<Tweet>(NewTweet),
-                new Progress<TwitStatus>(StatusChanged),
+                new Progress<Exception>(StatusChanged),
                 1000 * Properties.Settings.Default.Period,
                 $"TweetWatch/{Assembly.GetExecutingAssembly().Version()}"
             );
@@ -138,19 +139,26 @@ namespace TweetWatch
             comboBoxSite.Enabled = enabled;
         }
 
-        private void StatusChanged(TwitStatus status)
+        private void StatusChanged(Exception ex)
         {
             Color color;
             string message;
-            if (status == TwitStatus.Failed)
-            {
-                color = Color.Red;
-                message = "Unable to access twitter site";
-            }
-            else
+            if (ex == null)
             {
                 color = Color.Green;
                 message = "Monitoring twitter";
+            }
+            else if (ex is HttpRequestException)
+            {
+                color = Color.Red;
+                message = "Network error: " + ex.Message;
+            }
+            else
+            {
+                using (FormError dlg = new FormError(ex.ToString()))
+                    dlg.ShowDialog(this);
+                Environment.Exit(1);
+                return;
             }
             labelStatus.ForeColor = color;
             _tooltip.SetToolTip(labelStatus, message);

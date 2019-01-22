@@ -15,11 +15,10 @@ namespace TweetWatch
         private Uri _uri;
         private HashSet<string> _currentTweets;
         private IProgress<Tweet> _tweetProgress;
-        private IProgress<TwitStatus> _statusProgress;
-        private TwitStatus _currentStatus;
+        private IProgress<Exception> _statusProgress;
         private int _pollPeriod;
 
-        public TwitterPoll(string url, IProgress<Tweet> tweetProgress, IProgress<TwitStatus> statusProgress, int pollPeriod, string userAgent)
+        public TwitterPoll(string url, IProgress<Tweet> tweetProgress, IProgress<Exception> statusProgress, int pollPeriod, string userAgent)
         {
             _parser = new HtmlParser();
             _client = new HttpClient();
@@ -27,7 +26,6 @@ namespace TweetWatch
             _tweetProgress = tweetProgress;
             _statusProgress = statusProgress;
             _uri = new Uri(url);
-            _currentStatus = TwitStatus.Stopped;
             _pollPeriod = pollPeriod;
         }
 
@@ -35,20 +33,28 @@ namespace TweetWatch
         {
             Task.Run(async () =>
             {
-                while (true)
+                try
                 {
-                    if (_currentTweets == null)
-                        await InitializeCurrentTweets();
-                    else
-                        await PollForNewTweets();
+                    while (true)
+                    {
+                        if (_currentTweets == null)
+                            await InitializeCurrentTweets().ConfigureAwait(false);
+                        else
+                            await PollForNewTweets().ConfigureAwait(false);
+                        await Task.Delay(_pollPeriod).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _statusProgress.Report(ex);
                 }
             });
         }
 
         private async Task PollForNewTweets()
         {
-            await Task.Delay(_pollPeriod);
-            IHtmlDocument doc = await GetTwitter();
+            System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString() + " Polling thread = " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString());
+            IHtmlDocument doc = await GetTwitter().ConfigureAwait(false);
             if (doc != null)
             {
                 var tweets = doc.QuerySelectorAll("div.tweet");
@@ -74,41 +80,22 @@ namespace TweetWatch
 
         private async Task InitializeCurrentTweets()
         {
-            IHtmlDocument doc = await GetTwitter();
-            if (doc != null)
-            {
-                _currentTweets = new HashSet<string>(doc.QuerySelectorAll("div.tweet")
-                    .Select(x => x.GetAttribute("data-tweet-id")));
-            }
-            else
-            {
-                await Task.Delay(_pollPeriod);
-            }
+            IHtmlDocument doc = await GetTwitter().ConfigureAwait(false);
+            _currentTweets = new HashSet<string>(doc.QuerySelectorAll("div.tweet")
+                .Select(x => x.GetAttribute("data-tweet-id")));
         }
 
         private async Task<IHtmlDocument> GetTwitter()
         {
-            try
-            {
-                var page = await _client.GetStringAsync(_uri);
-                UpdateStatus(TwitStatus.Working);
-                var doc = _parser.Parse(page);
-                return doc;
-            }
-            catch (HttpRequestException)
-            {
-                UpdateStatus(TwitStatus.Failed);
-                return null;
-            }
+            var page = await _client.GetStringAsync(_uri).ConfigureAwait(false);
+            var doc = _parser.Parse(page);
+            UpdateStatus(null);
+            return doc;
         }
 
-        private void UpdateStatus(TwitStatus newStatus)
+        private void UpdateStatus(Exception ex)
         {
-            if (_currentStatus != newStatus)
-            {
-                _currentStatus = newStatus;
-                _statusProgress.Report(newStatus);
-            }
+            _statusProgress.Report(ex);
         }
     }
 }
