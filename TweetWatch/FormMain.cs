@@ -141,6 +141,7 @@ namespace TweetWatch
 
         private void StatusChanged(Exception ex)
         {
+            System.Diagnostics.Debug.WriteLine("StatusChanged: " + (ex?.Message ?? "null"));
             Color color;
             string message;
             if (ex == null)
@@ -230,7 +231,7 @@ namespace TweetWatch
             _notifyIcon.Visible = isMinimized;
         }
 
-        private string FilePath(string fileName)
+        private static string FilePath(string fileName)
         {
             return Path.IsPathRooted(fileName)
                 ? fileName
@@ -284,5 +285,6 @@ namespace TweetWatch
                 }
             }
         }
+
     }
 }

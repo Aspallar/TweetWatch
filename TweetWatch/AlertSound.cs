@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TweetWatch
 {
-    internal class AlertSound
+    internal sealed class AlertSound : IDisposable
     {
         private SoundPlayer _sound;
 
@@ -16,6 +16,15 @@ namespace TweetWatch
         {
             if (File.Exists(fileName))
                 _sound = new SoundPlayer(fileName);
+        }
+
+        public void Dispose()
+        {
+            if (_sound != null)
+            {
+                _sound.Dispose();
+                _sound = null;
+            }
         }
 
         public void Play()

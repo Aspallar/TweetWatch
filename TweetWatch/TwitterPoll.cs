@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TweetWatch
 {
-    internal class TwitterPoll
+    internal sealed class TwitterPoll : IDisposable
     {
         private HtmlParser _parser;
         private HttpClient _client;
@@ -17,6 +17,8 @@ namespace TweetWatch
         private IProgress<Tweet> _tweetProgress;
         private IProgress<Exception> _statusProgress;
         private int _pollPeriod;
+        private bool _statusReported;
+        private string _lastStatusMessage;
 
         public TwitterPoll(string url, IProgress<Tweet> tweetProgress, IProgress<Exception> statusProgress, int pollPeriod, string userAgent)
         {
@@ -27,6 +29,7 @@ namespace TweetWatch
             _statusProgress = statusProgress;
             _uri = new Uri(url);
             _pollPeriod = pollPeriod;
+            _statusReported = false;
         }
 
         public void Start()
@@ -37,10 +40,17 @@ namespace TweetWatch
                 {
                     while (true)
                     {
-                        if (_currentTweets == null)
-                            await InitializeCurrentTweets().ConfigureAwait(false);
-                        else
-                            await PollForNewTweets().ConfigureAwait(false);
+                        try
+                        {
+                            if (_currentTweets == null)
+                                await InitializeCurrentTweets().ConfigureAwait(false);
+                            else
+                                await PollForNewTweets().ConfigureAwait(false);
+                        }
+                        catch (HttpRequestException ex)
+                        {
+                            UpdateStatus(ex);
+                        }
                         await Task.Delay(_pollPeriod).ConfigureAwait(false);
                     }
                 }
@@ -95,7 +105,41 @@ namespace TweetWatch
 
         private void UpdateStatus(Exception ex)
         {
-            _statusProgress.Report(ex);
+            if (_statusReported)
+            {
+                if (ex == null)
+                {
+                    if (_lastStatusMessage != null)
+                    {
+                        _lastStatusMessage = null;
+                        _statusProgress.Report(null);
+                    }
+                }
+                else
+                {
+                    if (_lastStatusMessage != ex.Message)
+                    {
+                        _lastStatusMessage = ex.Message;
+                        _statusProgress.Report(ex);
+                    }
+                }
+            }
+            else
+            {
+                if (ex != null)
+                    _lastStatusMessage = ex.Message;
+                _statusReported = true;
+                _statusProgress.Report(ex);
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_client != null)
+            {
+                _client.Dispose();
+                _client = null;
+            }
         }
     }
 }

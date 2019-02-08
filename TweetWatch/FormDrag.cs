@@ -21,7 +21,7 @@ namespace TweetWatch
             if (e.Button == MouseButtons.Left)
             {
                 NativeMethods.ReleaseCapture();
-                NativeMethods.SendMessage(_target, Win.WM_NCLBUTTONDOWN, Win.HTCAPTION, 0);
+                NativeMethods.SendMessage(_target, Win.WM_NCLBUTTONDOWN, Win.HTCAPTION, IntPtr.Zero);
             }
         }
     }
